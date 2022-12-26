@@ -29,6 +29,7 @@ export default createVuetify({
         colors: {
           primary: '#73C8F9',
           secondary: '#F7D51D',
+          blackBg: '#121212'
           
         },
       },

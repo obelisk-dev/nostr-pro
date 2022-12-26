@@ -19,26 +19,39 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
-    import { relayPool } from '../utils/nostr'
+    import {Store} from '../store/index.js'
+    import {storeToRefs} from 'pinia'
+    //import { RelayPool } from '../utils/nostr'
     export default {
         name: 'feed',
-        setup() {
-            const pool = new relayPool()
-            pool.connectAll()
-            pool.on('connect', ({url}) => console.log('connected: ' + url))
-            setTimeout(() => {
-                pool.subAll(
-                    [{
-                        kinds: [1],
-                        authors: ['0cd556fe22df9d6ca951af418a615592d81366c6759eaeaf5b7a990516a3b4b1']
-                    }]
-                )
-                pool.on('event', ({url , subId, event}) => console.log('event', event))
-
-            }, 3000);
+        async setup() {
+            const store = Store()
+            //const { relayPool } = storeToRefs(store)
+            //console.log(store.relayPool)
+            let res = await store.relayPool.subAll(
+                     [{
+                         kinds: [1],
+                         authors: ['0cd556fe22df9d6ca951af418a615592d81366c6759eaeaf5b7a990516a3b4b1']
+                     }]
+                 )
+            console.log(res)
+            // const pool = new relayPool()
+            // pool.connectAll()
+            // pool.on('connect', ({url}) => console.log('connected: ' + url))
+            // setTimeout(() => {
+            //     let res = pool.subAll(
+            //         [{
+            //             kinds: [1],
+            //             authors: ['0cd556fe22df9d6ca951af418a615592d81366c6759eaeaf5b7a990516a3b4b1']
+            //         }]
+            //     )
+            //     console.log('1', res)
+            //     pool.on('event', ({url , subId, event}) => console.log('event', event))
+                
+            // }, 3000);
         
         return {
+            store,
             pool
         }
         },
@@ -55,7 +68,7 @@
         },
         mounted: function() {
             console.log('here')
-            console.log(this.pool)
+            // console.log(this.pool)
           
         },
         methods: {

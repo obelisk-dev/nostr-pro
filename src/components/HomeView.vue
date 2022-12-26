@@ -7,8 +7,9 @@
         rounded='xl'
         elevation="10"
         class="py-8 px-2 fill-height ma-4"
-        max-width="1000px"
+        
         width="100%"
+        variant="outlined"
       >
       
       <h1  class="text-h2 text-primary">
@@ -163,17 +164,18 @@
       </v-sheet>
     </v-row>
     </v-responsive>
+
   </v-container>
-
-
 </template>
 
 <script>
     import VueWriter from "vue-writer";
+    import ProfileCard from './childComponents/ProfileCard.vue'
     export default {
         name: 'HomeView',
         components: {
-          VueWriter
+          VueWriter,
+          ProfileCard
         },
         setup() {
 

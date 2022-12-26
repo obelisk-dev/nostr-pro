@@ -1,11 +1,11 @@
 <template>
     <v-container class="fill-height">
         <v-responsive class="d-flex justify-center text-center fill-height">
-            <v-row class="justify-center fill-height">
+            <v-row class="justify-center ">
                 <v-sheet 
                     rounded='xl'
                     elevation="10"
-                    class="py-8 px-2 fill-height ma-4"
+                    class="py-8 px-2  ma-4"
                     max-width="1000px"
                     width="100%"
                 >
