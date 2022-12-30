@@ -10,6 +10,7 @@
     "@mdi/font": "7.0.96",
     "axios": "^1.2.1",
     "eventemitter3": "^5.0.0",
+    "moment": "^2.29.4",
     "nostr": "^0.2.7",
     "nostr-tools": "^1.0.0-beta2",
     "pinia": "^2.0.27",

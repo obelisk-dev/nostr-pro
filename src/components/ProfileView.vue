@@ -1,62 +1,57 @@
 <template>
-    <v-container class="fill-height">
+    <v-container class="fill-height" :key="this.pk">
         <v-responsive class="d-flex text-left fill-height" >
-            <v-row class="py-4" justify="space-around">
-                <v-col class="" cols=7>
-                    <v-card  variant="outlined" class="fill-height py-2 px-4" >
-                        <v-card-title class="pb-4">
-                            <h4 class="text-h4 font-weight-bold " font-color="white">Feed</h4>
-                        </v-card-title>
-                        <v-divider heavy></v-divider>
-                        <v-list height= '700px' style="overflow-y:auto; background-color:#121212">
-
-                    
-                            <v-list-item v-for= "n in 100"  class="px-4 w-100 ">
-                            <template v-slot:prepend>
-                                <v-avatar
-                                    color="grey-darken-3"
-                                    image="https://heish.net/img/heish.jpg"
-                                    size="60"
-                                ></v-avatar>
-                            </template>
-
-                            <v-list-item-title class="text-primary"><strong>Heish </strong>~ jan 1, 09</v-list-item-title>
-                            <v-list-item-subtitle>npub53jgkl3j54klj643</v-list-item-subtitle>
-                            <div>Here is a post about nothing Here is aHere is a post about nothing Here iHere is a post about nothing Here iHere is a post about nothing Here iHere is a post about nothing Here iHere is a post about nothing Here iHere is a post about nothing Here i</div>
-                            <div class="my-1"></div>
-                            <div class="text-right">32<v-icon size="20">mdi-heart</v-icon>   32<v-icon size="20">mdi-reply</v-icon></div>
-                           
-                            <div class="my-2"></div>
-                            <v-divider ></v-divider>
-                            </v-list-item>
-                        </v-list>
-
-                    </v-card>
+            <v-row no-gutters class="py-4" justify="center">
+                <v-col :cols="isMobile ? '12':'6'" >
+                    <FeedCard type="profile" :pk=pk></FeedCard>
                 </v-col>
-                <v-col cols=4>
-                    <ProfileCard/>
+                <v-col :cols="isMobile ? '12':'3'" >
+                    <ProfileCard :pk=pk></ProfileCard>
                 </v-col>
             </v-row>
         </v-responsive>
     </v-container> 
 </template>
+<PostItem></PostItem>
   
 <script>
     import ProfileCard from './childComponents/ProfileCard.vue'
+    import FeedCard from './childComponents/FeedCard.vue'
+    import {Store} from '../store/index.js'
+    import {storeToRefs} from 'pinia'
+    import {Profile} from '../utils/Profile'
+    import { useDisplay } from 'vuetify'
+    //import {PostItem} from '@/childComponents/PostItem.vue'
+    //import {ref, watch} from 'vue'
     export default {
-        name: 'ProfileView',
+        name: 'profile',
         components: {
-        ProfileCard
+            ProfileCard,
+            FeedCard
         },
-        props:{id:String},
-        setup() {
+        props:{
+            pk:String
+        },
+        setup(props) {
+            const store = Store()
+            const { mobile } = useDisplay()
+            const isMobile = mobile.value
+            //check for stored profile - if none then create one and store it
+            const profile = store.getProfile(props.pk)
 
+            return {
+                isMobile
+            }   
         },
         data: function() {
             return {
 
 
             };
+        },
+
+        watch:{
+  
         },
         mounted: function() {
 

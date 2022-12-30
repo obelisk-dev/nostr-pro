@@ -2,38 +2,17 @@
   <v-app class="text-primary">
     <!-- TOP APP BAR -->
     <v-app-bar >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="sidePanelVis = !sidePanelVis"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-primary font-weight-bold ">Nostr Pro</v-toolbar-title>
       <!-- <v-btn disabled="true" class="align-right">Connect Web3</v-btn> -->
       <div  class="" style="width:30%">
-        <v-text-field
-          hide-details
-          prepend-icon="mdi-magnify"
-          single-line
-        ></v-text-field>
+        <SearchNpubBar/>
       </div>
       <div class="px-6"></div>
       <v-btn variant="outlined">Connect Nos2x</v-btn>
     </v-app-bar>
     <!-- SIDE DRAWER -->
-    <v-navigation-drawer
-      v-model="drawer"
-      class="pt-10 d-flex justify-center"
-      rail
-    >
-      <v-btn
-        class="ma-1 pa-2"
-        icon="mdi-home"
-        color="primary"
-        :to="'/'"
-      ></v-btn>
-      <v-btn
-        class="ma-1 pa-2"
-        icon="mdi-swap-horizontal"
-        color="primary"
-        :to="'/convert'"
-      ></v-btn>
-    </v-navigation-drawer>
+    <SideNavPanel/>
     <!-- Main View -->
     <v-main v-if = "relaysConnected">
       <router-view></router-view>
@@ -50,7 +29,7 @@
         <body class="body-1 white font-weight-bold">Connecting Relays... {{ this.connectedRelays }}  connected.</body>
     </v-overlay>
     <v-footer padless absolute inset app height="40" width="auto" class="py-4 justify-center text-center" >
-     <strong>Nostr Pro</strong> <div class="px-4"/> <a href="https://www.nostr.guru/p/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696"> Heish </a>
+      <v-btn variant='text' href="https://github.com/obelisk-dev/nostr-pro"> GitHub </v-btn> <div class="px-6"/>  <strong>Nostr Pro</strong> <div class="px-6"/> <v-btn variant='text' to="/profile/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696"> Heish </v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -59,10 +38,13 @@
   import {Store} from './store/index.js'
   import {storeToRefs} from 'pinia'
   import {ref} from 'vue'
+  import SearchNpubBar from '@/components/childComponents/SearchNpubBar.vue'
+  import SideNavPanel from '@/components/childComponents/SideNavPanel.vue'
+  import router from '@/router'
   export default {
     setup() {
       const store = Store()
-      const { connectedRelays, loggedInPk } = storeToRefs(store)
+      const { connectedRelays, loggedInPk, sidePanelVis } = storeToRefs(store)
       const { createRelayPool } = store
       const relaysConnected = ref(false)
         
@@ -71,10 +53,13 @@
         createRelayPool,
         connectedRelays,
         loggedInPk,
+        sidePanelVis,
         store
       }
     },
     components:{
+      SearchNpubBar,
+      SideNavPanel
     },
 
     watch: {
@@ -82,7 +67,6 @@
     },
     data: () => 
       ({ 
-        drawer: false,
         overlay: false
       }),
     mounted: async function() {
@@ -93,7 +77,10 @@
     methods: {
       getProfile() {
 
-      }
+      },
+      heish() {
+        this.router.push({ path: '/profile/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696' })
+      },
     }
   }
 </script>

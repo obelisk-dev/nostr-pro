@@ -70,7 +70,6 @@
                 try {
                     let lcinput = this.input.toLocaleLowerCase()
                     this.ln = lcinput.length
-                    console.log(this.ln)
                     if (this.ln < 60) throw ('too short')
                     if (lcinput.substring(0,4) === 'npub')  {
                         let {type, data} = nip19.decode(lcinput)

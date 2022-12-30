@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../components/HomeView'
 import ConvertView from '../components/ConvertView'
-import FeedView from '../components/FeedView'
 import ProfileView from '../components/ProfileView'
 
 const routes = [
@@ -16,17 +15,12 @@ const routes = [
     component: ConvertView,
   },
   {
-    path: "/feed",
-    name: "feed",
-    component: FeedView,
-  },
-  {
-    path: "/profile/:id",
+    path: "/profile/:pk",
     name: "profile",
     component: ProfileView,
     props: true
   },
-
+  
 ]
 
 const router = createRouter({

@@ -6,6 +6,7 @@
 
 // Components
 import App from './App.vue'
+import SearchNpubBar from '@/components/childComponents/SearchNpubBar.vue'
 
 // Composables
 import { createApp } from 'vue'
@@ -15,6 +16,7 @@ import { registerPlugins } from '@/plugins'
 
 const app = createApp(App)
 
+app.component("SearchNpubBar", SearchNpubBar);
 registerPlugins(app)
 
 app.mount('#app')
