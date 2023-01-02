@@ -25,6 +25,7 @@ export class RelayPool extends EventEmitter {
       this.relayUrls = _relayUrls
       this.pool = []
       this.subs = {}
+      this.connectedPool = []
       this.connectedRelays = 0
       try {
         this.pool = this.relayUrls.map(relayInit)
@@ -43,6 +44,7 @@ export class RelayPool extends EventEmitter {
             relay.connect()
             relay.on('connect', () => {
                   this.connectedRelays++
+                  this.connectedPool.push(relay)
                   this.emit('connect',{url:relay.url})
                 }
               )
@@ -52,7 +54,7 @@ export class RelayPool extends EventEmitter {
     }//end connect
 
     closeAll () {
-        this.pool.forEach(relay => {
+        this.connectedPool.forEach(relay => {
           try {
             relay.close()
           } catch(e) {console.log('error on close')}
@@ -74,7 +76,7 @@ export class RelayPool extends EventEmitter {
           //resolve
           resolve(events)
         }, _timeOut);
-        this.pool.forEach(relay => {
+        this.connectedPool.forEach(relay => {
           try {
             let sub = relay.sub(_query)
             this.subs[_subId].push(sub)
@@ -108,7 +110,7 @@ export class RelayPool extends EventEmitter {
 
     publishAll(event) {
       
-      this.pool.forEach(relay => {
+      this.connectedPool.forEach(relay => {
         try {
           let pub = relay.publish(event)
           pub.on('ok', () => {
