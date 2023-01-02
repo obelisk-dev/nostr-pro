@@ -58,7 +58,7 @@
             async getHomeFeed () {
                 let _query = [{
                          kinds: [1],
-                         limit: 10,
+                         limit: 3,
                          since: Math.round(Date.now() / 1000) - 60000,
                      }]
                 let _subId = 'globalFeed-'+Date.now().toString()
