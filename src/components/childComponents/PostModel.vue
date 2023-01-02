@@ -130,7 +130,7 @@
                 this.successSnackbar = true
                 this.seen++ 
               })
-              //this.store.relayPool.publishAll(_event)
+              this.store.relayPool.publishAll(_event)
             } catch(e){ this.resetVars(); this.show = false }
           },
           createEvent(text) {

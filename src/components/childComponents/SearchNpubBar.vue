@@ -4,9 +4,8 @@
     
     <v-text-field
         hide-details
-        prepend-icon="mdi-magnify"
         single-line
-        label="Enter Npub public key to view a profile."
+        label="Npub or hex public key to view a profile."
         v-model="this.input"
         @keydown.enter="search()"
     ></v-text-field>
