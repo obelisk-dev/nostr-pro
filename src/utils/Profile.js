@@ -1,6 +1,7 @@
 
 import { reactive } from 'vue'
 import { nip19 } from 'nostr-tools'
+import { sanitizeUrl } from '@braintree/sanitize-url'
 export class Profile {    
     constructor(pk) {
         this.pk = pk
@@ -36,6 +37,6 @@ export class Profile {
         let jsonContent = JSON.parse(content)
         this.name, this.refData.name = jsonContent.name
         this.about, this.refData.about = jsonContent.about
-        this.picture, this.refData.picture = jsonContent.picture
+        this.picture, this.refData.picture = sanitizeUrl(jsonContent.picture)
     }
 }
