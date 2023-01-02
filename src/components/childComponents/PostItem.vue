@@ -24,7 +24,10 @@
         <v-list-item-subtitle>{{ this.post.profile.npub }}</v-list-item-subtitle>
         <div>{{ this.post.event.content }}</div>
         <div class="my-1"></div>
-        <div class="text-right">?<v-icon size="20">mdi-heart</v-icon>   ?<v-icon size="20">mdi-reply</v-icon></div>
+        <div class="text-right">
+            {{ this.post.refData.likes +" "}}<v-icon size="20" color="red">mdi-heart-outline</v-icon>
+            {{ this.post.refData.replies +" "}}<v-icon size="20">mdi-reply-outline</v-icon>
+        </div>
         <div class="my-2"></div>
         <v-divider ></v-divider>
     </v-list-item>

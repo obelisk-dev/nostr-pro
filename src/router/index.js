@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../components/HomeView'
 import ConvertView from '../components/ConvertView'
 import ProfileView from '../components/ProfileView'
+import RelayView from '../components/RelayView'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: "profile",
     component: ProfileView,
     props: true
+  },
+  {
+    path: "/relays",
+    name: "RelayView",
+    component: RelayView,
   },
   
 ]

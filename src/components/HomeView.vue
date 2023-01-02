@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height">
-    <v-responsive class="d-flex justify-center text-center fill-height">
+    <v-responsive class="d-flex justify-center fill-height">
       <v-row class="justify-center ">
         <v-sheet 
           rounded='xl'
@@ -27,7 +27,7 @@
     <!-- right side -->
         <v-col :cols="isMobile ? '12':'5'" >
           
-          <v-row justify="center">
+          <v-row justify="center" class="text-center">
             <v-col cols="12" >
               <span class="text-h4">Getting Started</span>
               <v-divider></v-divider>
@@ -50,11 +50,6 @@
               Download Nos2x (chrome)
             </v-btn>
             <div class="py-2" />
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="12" >
-              <span class="text-body">Enter an Npub to find a profile</span>
             </v-col>
           </v-row>
           <v-row justify="center">

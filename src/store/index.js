@@ -10,30 +10,14 @@ export const Store = defineStore('Store', {
     relayPool: null,
     connectedRelays: 0,
     loggedInPk: null,
+    loggedInProfile: null,
     sidePanelVis: false,
     profiles:{}, //{'pK1':'Profile1', pk2:Profile2, ...}   
     posts:{}, //{'eventId1':Post, 'eventId2:{event2}, ...}
   }),
   
   getters: {
-    // hasStoredProfile (pk) {
-    //   return this.profiles.hasOwnProperty(pk)
-    // },
-    // hasStoredPost (id)  {
-    //   return this.posts.hasOwnProperty(id)
-    // },
-    // getProfileByPk(pk) {
-    //   if(!hasStoredProfile(pk)) {return false}
-    //   try {
-    //     return(this.profiles[pk])
-    //   } catch(e) { return false}
-    // },
-    // getPostByEventid(id) {
-    //   if(!hasStoredPost(id)) {return false}
-    //   try {
-    //     return(this.posts[pk])
-    //   } catch(e) { return false}
-    // }
+
   },
 
   actions: {
@@ -53,12 +37,12 @@ export const Store = defineStore('Store', {
       //if profile doesnt exist create one and add it.
       if(!this.profiles.hasOwnProperty(pk)) {
         const profile = new Profile(pk)
-        console.log("CREATING NEW PROFILE")
+        //console.log("CREATING NEW PROFILE")
         profile.getProfile(this.relayPool)
         this.profiles[pk] = profile
         return profile
       } else {
-        console.log("USING OLD PROFILE")
+        //console.log("USING OLD PROFILE")
         return (this.profiles[pk])
       }
     },
@@ -67,15 +51,15 @@ export const Store = defineStore('Store', {
       //if profile doesnt exist create one and add it.
       try{
         let eventId = event.id
-        let pubkey = event.pubkey
         if(!this.posts.hasOwnProperty(eventId)) {
-          console.log("CREATING NEW POST")
-          const post = new Post(event, this.getProfile(pubkey))
-          //post.getProfile(this.relayPool)
+          //console.log("CREATING NEW POST")
+          const post = new Post(event)
+          post.getLikes(this.relayPool)
+          post.getReplies(this.relayPool)
           this.posts[eventId] = post
           return post
         } else {
-          console.log("USING OLD POST")
+          //console.log("USING OLD POST")
           return (this.posts[eventId])
         }
       } catch(e) {}

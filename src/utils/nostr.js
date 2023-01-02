@@ -83,6 +83,7 @@ export class RelayPool extends EventEmitter {
               if(_event && _event.hasOwnProperty('id') && !returnedEventIds.includes(_event.id)) {
                 returnedEventIds.push(_event.id)
                 events.push(_event)
+                //console.log(_subId, _event)
                 this.emit('event', {url:relay.url, subId:_subId, event:_event})
               } else {
                 //console.log('dupe or no event id')
@@ -93,7 +94,7 @@ export class RelayPool extends EventEmitter {
               this.emit('eose', {url:relay.url, subId:_subId})
               if(_closeOnEose) {
                 try {
-                  console.log('unsub-'+_subId)
+                  //console.log('unsub-'+_subId)
                   sub.unsub()
                 } catch(e) {}
               }
@@ -103,6 +104,27 @@ export class RelayPool extends EventEmitter {
       
       })//end promise
       
+    }
+
+    publishAll(event) {
+      
+      this.pool.forEach(relay => {
+        try {
+          let pub = relay.publish(event)
+          pub.on('ok', () => {
+            console.log(relay.url + " has accepted our event")
+            this.emit('ok', {url:relay.url, id:event.id})
+          })
+          pub.on('seen', () => {
+            console.log(relay.url + " seen event")
+            this.emit('seen', {url:relay.url, id:event.id})
+          })
+          pub.on('failed', (reason) => {
+            console.log(relay.url + " failed to publish event, reason: " + reason)
+            this.emit('failed', {url:relay.url, id:event.id, reason:reason})
+          })
+        } catch(e){console.log(e)}
+      })
     }
 
     unSub(_subId) {

@@ -23,17 +23,18 @@
         rail
       >
         <v-list  nav>
-          <v-list-item v-if="this.isLoggedIn"
-            prepend-avatar="https://heish.net/img/heish.jpg"
-            title="Heish"
-            subtitle="sandra_a88@gmailcom"
+          <v-list-item v-if="this.loggedInPk"
+            :prepend-avatar="this.loggedInProfile.refData.picture"
+            :title="this.loggedInProfile.refData.name"
+            :subtitle="this.loggedInProfile.npub"
             value="profile"
-            :to="'/profile/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696'"
+            :to="'/profile/'+this.loggedInPk"
           ></v-list-item>
-          <v-divider></v-divider>
+          <v-divider v-if="this.loggedInPk"></v-divider>
           <v-list-item prepend-icon="mdi-home" title="Home" value="home" :to="'/'"></v-list-item>
           <v-list-item disabled prepend-icon="mdi-message" title="Messages" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-swap-horizontal" title="Convert Key" value="convert" :to="'/convert'"></v-list-item>
+          <v-list-item prepend-icon="mdi-server" title="My Relays" value="relays" :to="'/relays'"></v-list-item>
           <v-list-item disabled prepend-icon="mdi-cog" title="Settings" value="settings"></v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -48,17 +49,19 @@
   export default {
     setup() {
       const store = Store()
-      const { connectedRelays, loggedInPk, sidePanelVis } = storeToRefs(store)
+      const { loggedInPk, sidePanelVis, loggedInProfile } = storeToRefs(store)
       const { createRelayPool } = store
         
       return {
         sidePanelVis,
+        loggedInPk,
+        loggedInProfile,
         store
       }
     },
     data: function() {
         return {
-            isLoggedIn:true
+
         }
     }
 

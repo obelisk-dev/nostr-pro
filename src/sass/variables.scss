@@ -1,9 +1,9 @@
 
 
-.v-application {
+.v-application, .v-model {
     font-family: 'Share Tech Mono' !important;
   }
-  .v-application, .v-overlay, .v-sheet {
+  .v-application, .v-overlay, .v-sheet, .v-snackbar, .v-dialog, .v-card {
     .display-4,
     .display-3,
     .display-2,
@@ -13,13 +13,16 @@
     .subtitle-1,
     .subtitle-2,
     .body-1,
-    .body-2,
+    .text-body-1,
+    .text-body-2,
     .caption,
     .overline,
     .text-h2,
     .text-h1,
     .text-h3,
-    .text-h4
+    .text-h4,
+    .text-h5,
+    .text-caption
     {
       font-family: 'Share Tech Mono' !important;
     }

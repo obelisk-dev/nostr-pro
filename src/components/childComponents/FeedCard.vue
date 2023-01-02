@@ -1,8 +1,26 @@
 <template>
-    <v-card  variant="outlined" class="fill-height py-2 px-4" >
+    <v-card  variant="outlined" class="fill-height py-2 px-4 text-left" >
         <v-card-title class="pb-4">
             <h4 class="text-h4 font-weight-bold " font-color="white">Feed</h4>
         </v-card-title>
+        <!-- <v-divider heavy></v-divider>
+        <v-tabs
+            v-model="tab"
+            grow
+        >
+            <v-tab
+                :key="item"
+                :value="item"
+            >
+                Post
+            </v-tab>
+            <v-tab
+                :key="item"
+                :value="item"
+            >
+                Reply
+            </v-tab>
+        </v-tabs> -->
         <v-divider heavy></v-divider>
         <v-list height= '700px' style="overflow-y:auto; background-color:#121212">
             <PostItem v-for="post in postArray" :post = post></PostItem>
@@ -33,7 +51,8 @@
         },
         data: function() {
             return {
-                postArray:[]
+                postArray:[],
+                subs:[]
             };
         },
         watch: {
@@ -47,15 +66,18 @@
             }
           
         },
+        unmounted: function() {
+            this.unSubComponentSubs()
+        },
         methods: {
             async getProfileFeed () {
                 let _query = [{
                          kinds: [1],
                          authors: [this.pk],
-                         limit: 50
+                         limit: 20
                      }]
                 let _subId = 'profileFeed-' + this.pk
-
+                this.subs.push(_subId)
                 this.store.relayPool.on('event', ({event, subId}) => {
                     if(event && _subId === subId) {
                         try{
@@ -63,8 +85,7 @@
                         }catch(e){}
                     }
                 })
-
-                this.store.relayPool.subAll(_query, _subId, false, 30000, true)
+                this.store.relayPool.subAll(_query, _subId, false, 300000, true)
                 //results gathered after timeout
                 
                 //results gathered before timeout
@@ -82,6 +103,13 @@
                     //     this.postArray.splice(200)
                     // }
                 } catch(e) {console.log(e)}
+            },
+            unSubComponentSubs() {
+                try{
+                    this.subs.forEach(subId => {
+                        this.store.relayPool.unSub(subId)
+                    });
+                } catch(e) {}
             }
 
         },

@@ -1,7 +1,7 @@
 <template>
     <v-card  variant="outlined" class="fill-height py-2 px-4" >
         <v-card-title class="pb-4">
-            <h4 class="text-h4 font-weight-bold " font-color="white">Global Feed</h4>
+            <h4 class="text-h4" font-color="white">Global Feed</h4>
         </v-card-title>
         <v-divider heavy></v-divider>
         <v-list  height= '700px' style="overflow-y:auto; background-color:#121212">
@@ -61,7 +61,7 @@
                          limit: 10,
                          since: Math.round(Date.now() / 1000) - 60000,
                      }]
-                let _subId = 'globalFeed'
+                let _subId = 'globalFeed-'+Date.now().toString()
                 this.store.relayPool.on('event', ({event, subId}) => {
                     if(event && _subId === subId) {
                         try{

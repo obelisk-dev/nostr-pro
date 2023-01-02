@@ -6,7 +6,7 @@
         hide-details
         prepend-icon="mdi-magnify"
         single-line
-        label="Enter Npub public key"
+        label="Enter Npub public key to view a profile."
         v-model="this.input"
         @keydown.enter="search()"
     ></v-text-field>
