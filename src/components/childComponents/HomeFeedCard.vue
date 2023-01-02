@@ -59,7 +59,7 @@
                 let _query = [{
                          kinds: [1],
                          limit: 3,
-                         since: Math.round(Date.now() / 1000) - 60000,
+                         since: Math.round(Date.now() / 1000) - 40000,
                      }]
                 let _subId = 'globalFeed-'+Date.now().toString()
                 this.store.relayPool.on('event', ({event, subId}) => {
