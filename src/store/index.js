@@ -47,13 +47,13 @@ export const Store = defineStore('Store', {
       }
     },
 
-    getPost(event) {
+    getPost(event, loadProfile = true) {
       //if profile doesnt exist create one and add it.
       try{
         let eventId = event.id
         if(!this.posts.hasOwnProperty(eventId)) {
           //console.log("CREATING NEW POST")
-          const post = new Post(event)
+          const post = new Post(event, loadProfile)
           post.getLikes(this.relayPool)
           post.getReplies(this.relayPool)
           this.posts[eventId] = post

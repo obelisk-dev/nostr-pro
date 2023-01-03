@@ -83,6 +83,7 @@ export class RelayPool extends EventEmitter {
             //onevent
             sub.on('event', _event => {
               if(_event && _event.hasOwnProperty('id') && !returnedEventIds.includes(_event.id)) {
+                _event.url = relay.url
                 returnedEventIds.push(_event.id)
                 events.push(_event)
                 //console.log(_subId, _event)

@@ -30,7 +30,7 @@ export class Profile {
                 }catch(e) {console.log(e)}
             }
         })
-        relayPool.subAll(_query, _subId, true, 10000, true)
+        relayPool.subAll(_query, _subId, true, 4000, true)
     }
 
     setProperties (content) {
