@@ -2,12 +2,12 @@
   <v-app class="text-primary">
     <!-- TOP APP BAR -->
     <v-app-bar >
-      <!-- <v-app-bar-nav-icon @click="sidePanelVis = !sidePanelVis"></v-app-bar-nav-icon> -->
+      <v-app-bar-nav-icon @click="sidePanelVis = !sidePanelVis"></v-app-bar-nav-icon> 
       <v-toolbar-title class="text-primary">
         <BrowserExtBtn/>
       </v-toolbar-title>
       <!-- <v-btn disabled="true" class="align-right">Connect Web3</v-btn> -->
-      <div style="width:40%">
+      <div v-if="!this.$vuetify.display.mobile" style="width:40%">
         <SearchNpubBar/>
       </div>
       <div class="px-2"></div>
@@ -43,20 +43,23 @@
   import SideNavPanel from '@/components/childComponents/SideNavPanel.vue'
   import BrowserExtBtn from '@/components/childComponents/BrowserExtBtn.vue'
   import router from '@/router'
+  import { useDisplay } from 'vuetify'
   export default {
     setup() {
       const store = Store()
       const { connectedRelays, loggedInPk, sidePanelVis } = storeToRefs(store)
       const { createRelayPool } = store
       const relaysConnected = ref(false)
-        
+      const { mobile } = useDisplay()
+      const isMobile = mobile.value
       return {
         relaysConnected,
         createRelayPool,
         connectedRelays,
         loggedInPk,
         sidePanelVis,
-        store
+        store,
+        isMobile
       }
     },
     components:{
@@ -73,8 +76,10 @@
         overlay: false
       }),
     mounted: async function() {
+      this.sidePanelVis = !this.isMobile
       let num = await this.createRelayPool()
       this.relaysConnected = true
+      // console.log('m',this.$vuetify.display.mobile)
       //this.getProfile()
     },
     methods: {

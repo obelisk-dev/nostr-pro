@@ -16,7 +16,7 @@ export class Profile {
     }   
 
     getProfile (relayPool) {
-        let _subId = 'getProfile-'+this.pk
+        let _subId = 'getProfile-'+this.pk+Date.now().toString()
         let _query =[{
                         kinds: [0],
                         authors: [this.pk],
