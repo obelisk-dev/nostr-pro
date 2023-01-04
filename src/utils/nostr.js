@@ -65,13 +65,14 @@ export class RelayPool extends EventEmitter {
     subAll (_query = [], 
             _subId = null, 
             _closeOnEose = true, 
-            _timeOut = 1, 
+            _timeOut = 3000, 
             _closeAllOnTimeout = false,
             _resolveOnAllEose = false
           ) 
     {
       //keep all returned event hashes so we dont return repeats
       return new Promise((resolve, reject) => { 
+
         let returnedEventIds = []
         let events = []
         this.subs[_subId] = []
@@ -119,6 +120,18 @@ export class RelayPool extends EventEmitter {
         })//end foreach
       
       })//end promise
+      
+    }
+
+    async maxRelaySubAll(_query = [], 
+      _subId = null, 
+      _closeOnEose = true, 
+      _timeOut = 3000, 
+      _closeAllOnTimeout = false,
+      _resolveOnAllEose = false
+    ) {
+
+
       
     }
 

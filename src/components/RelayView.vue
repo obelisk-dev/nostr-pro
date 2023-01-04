@@ -16,7 +16,7 @@
                     <div class="py-6" />
                     
                     <v-row >
-                        <v-col cols="6">
+                        <v-col :cols="this.$vuetify.display.mobile ? '12':'6'">
                             <v-table theme="dark">
                             <thead>
                             <tr>
@@ -51,9 +51,23 @@
 
 <script>
     import {nip19, generatePrivateKey, getPublicKey} from 'nostr-tools'
+    import {Store} from '@/store/index.js'
+    import {storeToRefs} from 'pinia'
     export default {
         name: 'RelayView',
         components: {
+
+        },
+        setup() {
+            const store = Store()
+            const { connectedRelays, relayPool } = storeToRefs(store)
+
+
+            return({
+                relayPool,
+                connectedRelays,
+                store
+            })
 
         },
         data: function() {

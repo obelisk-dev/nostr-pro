@@ -19,10 +19,11 @@
     </v-navigation-drawer> -->
 
     <v-navigation-drawer
-        expand-on-hover
         rail
+        expand-on-hover
+        v-model="sidePanelVis"
       >
-        <v-list  nav>
+        <v-list nav>
           <v-list-item v-if="this.loggedInPk"
             :prepend-avatar="this.loggedInProfile.refData.picture"
             :title="this.loggedInProfile.refData.name"
