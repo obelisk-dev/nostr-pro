@@ -7,12 +7,10 @@
                     <template v-slot:icon>
                         <v-avatar size="60" :image="post.profile.refData.picture" ></v-avatar>
                     </template>
-                    <template v-slot:opposite>
-                        <span>{{ post.refData.moment }}</span>
-                    </template>
-                    <v-card class="elevation-2" max-width="400px" width="100%">
-                        <v-card-title class="text-h5">
+                    <v-card class="elevation-2" :max-width="isMobile? '250px':'450px'" width="100%">
+                        <v-card-title class="text-h5 text-primary">
                             {{ post.profile.refData.name }}
+                            <span class="text-body-2"> ~ {{ post.refData.moment }}</span>
                         </v-card-title>
                         <v-card-subtitle>
                             {{ post.profile.npub }}
