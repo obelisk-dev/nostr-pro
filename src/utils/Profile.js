@@ -25,12 +25,13 @@ export class Profile {
         relayPool.on('event', ({event, subId}) => {
             if(event && _subId === subId) {
                 this.event = event
+                relayPool.unSub(subId)
                 try{
                     this.setProperties(event.content)
                 }catch(e) {console.log(e)}
             }
         })
-        relayPool.subAll(_query, _subId, true, 10000, true)
+        relayPool.subAll(_query, _subId, true, 4000, true)
     }
 
     setProperties (content) {

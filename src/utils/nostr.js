@@ -16,6 +16,7 @@ const relayUrls = [
   "wss://nostr.oxtr.dev",
   "wss://nostr.v0l.io",
   "wss://nostr-2.zebedee.cloud",
+  "wss://nostr-pub.wellorder.net"
 ]
 
 export class RelayPool extends EventEmitter {
@@ -61,12 +62,20 @@ export class RelayPool extends EventEmitter {
         })
     }
 
-    subAll (_query = [], _subId = null, _closeOnEose = true, _timeOut = 1, _closeAllOnTimeout = false) {
+    subAll (_query = [], 
+            _subId = null, 
+            _closeOnEose = true, 
+            _timeOut = 1, 
+            _closeAllOnTimeout = false,
+            _resolveOnAllEose = false
+          ) 
+    {
       //keep all returned event hashes so we dont return repeats
       return new Promise((resolve, reject) => { 
         let returnedEventIds = []
         let events = []
         this.subs[_subId] = []
+        let eoseCount = 0
         // send results after timeout and unsub all
         setTimeout(() => {
           //unsub all
@@ -83,6 +92,7 @@ export class RelayPool extends EventEmitter {
             //onevent
             sub.on('event', _event => {
               if(_event && _event.hasOwnProperty('id') && !returnedEventIds.includes(_event.id)) {
+                _event.url = relay.url
                 returnedEventIds.push(_event.id)
                 events.push(_event)
                 //console.log(_subId, _event)
@@ -94,6 +104,10 @@ export class RelayPool extends EventEmitter {
             //oneose
             sub.on('eose', () => {
               this.emit('eose', {url:relay.url, subId:_subId})
+              eoseCount++
+              if(_resolveOnAllEose && (eoseCount >= this.connectedRelays)) {
+                resolve(events)
+              }
               if(_closeOnEose) {
                 try {
                   //console.log('unsub-'+_subId)

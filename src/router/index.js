@@ -3,6 +3,7 @@ import HomeView from '../components/HomeView'
 import ConvertView from '../components/ConvertView'
 import ProfileView from '../components/ProfileView'
 import RelayView from '../components/RelayView'
+import ThreadView from '../components/ThreadView'
 
 const routes = [
   {
@@ -26,6 +27,12 @@ const routes = [
     name: "RelayView",
     component: RelayView,
   },
+  {
+    path: "/thread/:id",
+    name: "ThreadView",
+    component: ThreadView,
+    props: true
+  }
   
 ]
 

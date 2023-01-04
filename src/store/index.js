@@ -47,15 +47,15 @@ export const Store = defineStore('Store', {
       }
     },
 
-    getPost(event) {
+    getPost(event, loadProfile = true, getReplies = true, getLikes = false) {
       //if profile doesnt exist create one and add it.
       try{
         let eventId = event.id
         if(!this.posts.hasOwnProperty(eventId)) {
           //console.log("CREATING NEW POST")
-          const post = new Post(event)
-          post.getLikes(this.relayPool)
-          post.getReplies(this.relayPool)
+          const post = new Post(event, loadProfile)
+          if(getLikes) {post.getLikes(this.relayPool)}
+          if(getReplies) {post.getReplies(this.relayPool)}
           this.posts[eventId] = post
           return post
         } else {
@@ -68,6 +68,16 @@ export const Store = defineStore('Store', {
     addPost (id, post) {
       this.posts[id] = post
     },
+
+    getPostFromId (id) {
+      let post = null
+      try{
+        post = this.posts[id]
+      } catch(e){}
+      return post
+    }
+
+
   }//end actions
 })
 

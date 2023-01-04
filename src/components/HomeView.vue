@@ -21,7 +21,7 @@
       
     <!-- secondsection 2 columns -->
       <v-row justify="center">
-        <v-col :cols="isMobile ? '12':'5'"  >
+        <v-col :cols="isMobile ? '12':'6'"  >
           <HomeFeedCard/>
         </v-col>
     <!-- right side -->
