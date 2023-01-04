@@ -24,10 +24,24 @@
         <v-list-item-subtitle>{{ this.post.profile.npub }}</v-list-item-subtitle>
         <div>{{ this.post.event.content }}</div>
         <div class="my-1"></div>
-        <div class="text-right">
-            {{ this.post.refData.likes +" "}}<v-icon size="20" color="red">mdi-heart-outline</v-icon>
-            {{ this.post.refData.replies +" "}}<v-icon size="20">mdi-reply-outline</v-icon>
-        </div>
+        <v-row>
+            <v-col class="">
+                <ViewReplyPill v-if="this.post.isReply" :ReplyEventId = "this.post.replyId || this.post.rootId" ></ViewReplyPill> 
+                <v-btn
+                    v-if="this.post.isReply"
+                    @click="this.goToThread"
+                    link
+                    variant="text"
+                    size="x-small"
+                >
+                    View Thread
+                </v-btn>
+            </v-col>
+            <v-col class="text-right">
+                <!-- {{ this.post.refData.likes +" "}}<v-icon size="20" color="red">mdi-heart-outline</v-icon> -->
+                {{ this.post.refData.replies +" "}}<v-icon size="20">mdi-comment-text-outline</v-icon>
+            </v-col>
+        </v-row>
         <div class="my-2"></div>
         <v-divider ></v-divider>
     </v-list-item>
@@ -36,8 +50,12 @@
 <script>
     import { Post } from '@/utils/Post'
     import  router  from '@/router'
+    import ViewReplyPill from './ViewReplyPill.vue';
     export default {
         name: 'PostItem',
+        components:{
+            ViewReplyPill
+        },
         props:{
             post: Post
         },
@@ -58,6 +76,9 @@
         methods: {
             goToProfile(){
                 router.push({ path: '/profile/'+this.post.profile.pk })
+            },
+            goToThread(){
+                router.push({ path: '/thread/'+this.post.event.id })
             }
         }
 

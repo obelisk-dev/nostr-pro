@@ -8,7 +8,7 @@ export class Post {
     constructor( event, loadProfile = true ) {
 
         this.event = event
-        this.refData = reactive({date:new Date(this.event.created_at * 1000), moment:'', likes:0, replies:0})
+        this.refData = reactive({date:new Date(this.event.created_at * 1000), moment:'', likes:'', replies:''})
         this.date = new Date(this.event.created_at * 1000)
         this.refData.moment = (formatDuration(Date.now() - this.date)) || 'Now'
 
@@ -20,17 +20,15 @@ export class Post {
         }
 
         this.replies = []
-        this.sortTags()
         this.isReply = false
         this.rootId = ''
         this.replyId = ''
         this.eTags = []
         this.pTags = []
         this.rootTag = []
-        this.tagType = '' //preferred or deprecated
-        //this.parentPostId = 
-        //this.parentPost = 
-
+        this.tagType = ''
+        this.sortTags()
+        console.log(this)
     }
     getProfile() {
         const store = Store()
@@ -76,10 +74,14 @@ export class Post {
     }
     sortTags() {
         try {
-            if (this.event.tags.length < 1) return
+            if (this.event.tags.length < 1) {
+                this.tagType = 'preferred'
+                return
+            }
             console.log("tags", this.event.tags, this.event)
-            this.event.tags.foreach(tag => {
+            this.event.tags.forEach(tag => {
                 if (tag[0] == 'e') {
+                    this.isReply = true
                     this.eTags.push(tag)
                     try {
                         if(tag.length >= 4) {
@@ -87,13 +89,11 @@ export class Post {
                             if(tag[3] == 'reply') {
                                 this.tagType = 'preferred'
                                 this.replyId = tag[1]
-                                this.isReply = true
                             } 
                             if(tag[3] == 'root') {
                                 this.tagType = 'preferred'
                                 this.rootId = tag[1]
                                 this.rootTag = tag
-                                this.isReply = true
                             }    
                         }
                     } catch(e) {console.log(e)}
@@ -103,11 +103,17 @@ export class Post {
             })
             if(this.tagType == 'preferred') return  //we are done and tag is in preferred format, if not lets try deprecated
             if (this.eTags.length > 0) {
+                this.tagType = 'deprecated'
                 try {
-                    this.rootId = eTags[0][1]
-                    this.rootTag = eTags[0]
-                    this.rootTag
-                } catch(e) {}
+                    this.rootId = this.eTags[0][1]
+                    this.rootTag = this.eTags[0]
+                } catch(e) {console.log(e)}
+            } 
+            if (this.eTags.length > 1) {
+                this.tagType = 'deprecated'
+                try {
+                    this.replyId = this.eTags[this.eTags.length - 1][1]
+                } catch(e) {console.log(e)}
             }
         } catch(e){console.log(e)}
 

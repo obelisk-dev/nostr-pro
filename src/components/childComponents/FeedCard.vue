@@ -97,7 +97,7 @@
             },//end getProfilefeed
             addEventToPostArray(event) {
                 try{
-                    this.postArray.unshift(this.store.getPost(event))
+                    this.postArray.unshift(this.store.getPost(event,true))
                     this.postArray.sort((a, b) => parseFloat(b.event.created_at) - parseFloat(a.event.created_at));
                     // if(this.postArray > 200) {
                     //     this.postArray.splice(200)
