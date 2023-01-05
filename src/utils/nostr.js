@@ -62,6 +62,10 @@ export class RelayPool extends EventEmitter {
         })
     }
 
+    // connectNewRelay (url) {
+    //   let newRelay = relayInit(url)
+    // }
+
     subAll (_query = [], 
             _subId = null, 
             _closeOnEose = true, 
@@ -131,6 +135,11 @@ export class RelayPool extends EventEmitter {
       _resolveOnAllEose = false
     ) {
 
+      // while (true) {
+      //   value_name = await GM.getValue('value_name')
+      //   if (value_name !== undefined) break
+      //   await new Promise(resolve => setTimeout(resolve, 500))
+      // }
 
       
     }
