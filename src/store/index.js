@@ -13,7 +13,7 @@ export const Store = defineStore('Store', {
     loggedInProfile: null,
     sidePanelVis: false,
     profiles:{}, //{'pK1':'Profile1', pk2:Profile2, ...}   
-    posts:{}, //{'eventId1':Post, 'eventId2:{event2}, ...}
+    posts:{}, //{'eventId1':Post1, 'eventId2:Post2, ...}
   }),
   
   getters: {
