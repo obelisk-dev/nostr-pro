@@ -97,7 +97,7 @@
                         }catch(e){}
                     }
                 })
-                const ret = this.store.relayPool.subAll(_query,_subId,true,10000,true)
+                const ret = this.store.relayPool.maxRelaySubAll(_query,_subId,true,10000,true)
 
             }//end getThread
         }

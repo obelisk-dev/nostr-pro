@@ -17,7 +17,7 @@ const routes = [
     component: ConvertView,
   },
   {
-    path: "/profile/:pk",
+    path: "/p/:pk",
     name: "profile",
     component: ProfileView,
     props: true

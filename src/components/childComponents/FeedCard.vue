@@ -85,7 +85,7 @@
                         }catch(e){}
                     }
                 })
-                this.store.relayPool.subAll(_query, _subId, false, 300000, true)
+                this.store.relayPool.maxRelaySubAll(_query, _subId, false, 300000, true)
                 //results gathered after timeout
                 
                 //results gathered before timeout

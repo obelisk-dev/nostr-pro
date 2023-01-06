@@ -75,7 +75,7 @@
         },
         methods: {
             goToProfile(){
-                router.push({ path: '/profile/'+this.post.profile.pk })
+                router.push({ path: '/p/'+this.post.profile.pk })
             },
             goToThread(){
                 router.push({ path: '/thread/'+this.post.event.id })

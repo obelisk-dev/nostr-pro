@@ -58,7 +58,7 @@
             async getHomeFeed () {
                 let _query = [{
                          kinds: [1],
-                         limit: 3,
+                         limit: 6,
                          since: Math.round(Date.now() / 1000) - 45000,
                      }]
                 let _subId = 'globalFeed-'+Date.now().toString()
@@ -70,7 +70,7 @@
                     }
                 })
                 this.subs.push(_subId)
-                this.store.relayPool.subAll(_query, _subId, false, 360000, true)
+                this.store.relayPool.maxRelaySubAll(_query, _subId, false, 360000, true)
                 //results gathered after timeout
                 
                 //results gathered before timeout

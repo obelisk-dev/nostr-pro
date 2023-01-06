@@ -30,7 +30,7 @@
         <body class="body-1 white font-weight-bold">Connecting Relays... {{ this.connectedRelays }}  connected.</body>
     </v-overlay>
     <v-footer padless absolute inset app height="40" width="auto" class="py-4 justify-center text-center" >
-      <v-btn variant='text' href="https://github.com/obelisk-dev/nostr-pro"> GitHub </v-btn> <div class="px-6"/>  <strong>Nostr Pro</strong> <div class="px-6"/> <v-btn variant='text' to="/profile/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696"> Heish </v-btn>
+      <v-btn variant='text' href="https://github.com/obelisk-dev/nostr-pro"> GitHub </v-btn> <div class="px-6"/>  <strong>Nostr Pro</strong> <div class="px-6"/> <v-btn variant='text' to="/p/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696"> Heish </v-btn>
     </v-footer>
   </v-app>
 </template>
@@ -87,7 +87,7 @@
 
       },
       heish() {
-        this.router.push({ path: '/profile/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696' })
+        this.router.push({ path: '/p/864b39528c6fff7a368a7f3bac219fdebc7c3d0ae778adaed6fec7e18a1ed696' })
       },
     }
   }

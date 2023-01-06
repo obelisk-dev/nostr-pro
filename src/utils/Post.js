@@ -8,7 +8,7 @@ export class Post {
     constructor( event, loadProfile = true ) {
 
         this.event = event
-        this.refData = reactive({date:new Date(this.event.created_at * 1000), moment:'', likes:'', replies:''})
+        this.refData = reactive({date:new Date(this.event.created_at * 1000), moment:'', likes:'', replies:0})
         this.date = new Date(this.event.created_at * 1000)
         this.refData.moment = (formatDuration(Date.now() - this.date)) || 'Now'
 
@@ -52,7 +52,7 @@ export class Post {
                 }catch(e) {console.log(e)}
             }
         })
-        const reactions = await relayPool.subAll(_query, _subId, true, 8000, true)
+        const reactions = await relayPool.maxRelaySubAll(_query, _subId, true, 8000, true)
         this.refData.likes = reactions.length
     }
     async getReplies(relayPool) {
@@ -69,7 +69,7 @@ export class Post {
                 }catch(e) {console.log(e)}
             }
         })
-        this.replies = await relayPool.subAll(_query, _subId, true, 8000, true)
+        this.replies = await relayPool.maxRelaySubAll(_query, _subId, true, 3000, true)
         this.refData.replies = this.replies.length
     }
     sortTags() {
