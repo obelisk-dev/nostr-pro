@@ -28,6 +28,7 @@ export class RelayPool extends EventEmitter {
       this.subs = {}
       this.connectedPool = []
       this.connectedRelays = 0
+      this.subCount = 0
       try {
         this.pool = this.relayUrls.map(relayInit)
       } catch(e) {console.log(e)}
@@ -90,6 +91,9 @@ export class RelayPool extends EventEmitter {
           //resolve
           resolve(events)
         }, _timeOut);
+
+        this.subCount++
+
         this.connectedPool.forEach(relay => {
           try {
             let sub = relay.sub(_query)
@@ -135,11 +139,12 @@ export class RelayPool extends EventEmitter {
       _resolveOnAllEose = false
     ) {
 
-      // while (true) {
-      //   value_name = await GM.getValue('value_name')
-      //   if (value_name !== undefined) break
-      //   await new Promise(resolve => setTimeout(resolve, 500))
-      // }
+      while (true) {
+        if (this.subCount<30) break
+        await new Promise(resolve => setTimeout(resolve, 500))
+      }
+
+      return this.subAll(_query, _subId, _closeOnEose, _timeOut, _closeAllOnTimeout, _resolveOnAllEose)
 
       
     }
@@ -173,6 +178,10 @@ export class RelayPool extends EventEmitter {
               sub.unsub()
             } catch(e) {}
         })
+        console.log('before', this.subCount)
+        delete this.subs[_subId]
+        this.subCount = Object.keys(this.subs).length
+        console.log('after', this.subCount)
       } catch(e) {}
     }
 

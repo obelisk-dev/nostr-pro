@@ -29,7 +29,7 @@
             :title="this.loggedInProfile.refData.name"
             :subtitle="this.loggedInProfile.npub"
             value="profile"
-            :to="'/profile/'+this.loggedInPk"
+            :to="'/p/'+this.loggedInPk"
           ></v-list-item>
           <v-divider v-if="this.loggedInPk"></v-divider>
           <v-list-item prepend-icon="mdi-home" title="Home" value="home" :to="'/'"></v-list-item>

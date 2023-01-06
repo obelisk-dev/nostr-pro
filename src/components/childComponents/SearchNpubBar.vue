@@ -43,9 +43,9 @@
                     if (lcinput.substring(0,4) === 'npub')  {
                         let {type, data} = nip19.decode(lcinput)
                         this.output = (type === 'npub' && data) ? data : ''
-                        router.push({ path: '/profile/'+this.output })
+                        router.push({ path: '/p/'+this.output })
                     } else {
-                        router.push({ path: '/profile/'+lcinput })
+                        router.push({ path: '/p/'+lcinput })
                     }
                 } catch (e) {console.log(e)}
             }

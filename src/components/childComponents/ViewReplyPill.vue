@@ -71,7 +71,7 @@
         },
         methods: {
             goToProfile(){
-                router.push({ path: '/profile/'+this.post.profile.pk })
+                router.push({ path: '/p/'+this.post.profile.pk })
             },
             async getPost(){
                 this.loading = true
@@ -86,11 +86,12 @@
                     if(event && _subId === subId) {
                         try{
                             this.post = this.store.getPost(event,true)
+                            this.store.relayPool.unSub(subId)
                             this.loading = false
                         }catch(e){}
                     }
                 })
-                const ret = await this.store.relayPool.subAll(_query,_subId,true,3000,true)
+                const ret = await this.store.relayPool.maxRelaySubAll(_query,_subId,true,5000,true)
                 this.loading = false
             }
         }
