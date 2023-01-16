@@ -15,11 +15,11 @@
     <!-- SIDE DRAWER -->
     <SideNavPanel/>
     <!-- Main View -->
-    <v-main v-if = "relaysConnected">
+    <v-main v-if = "relaysConnected || this.connectedRelays > 5">
       <router-view></router-view>
     </v-main>
     <!-- Loading Overlay -->
-    <v-overlay :model-value="!relaysConnected" class="text-center align-center justify-center">
+    <v-overlay :model-value="!relaysConnected && this.connectedRelays <= 5" class="text-center align-center justify-center">
         <v-progress-circular
             indeterminate
             size="100"
