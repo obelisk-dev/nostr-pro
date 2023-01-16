@@ -2,7 +2,7 @@
     <v-container class="fill-height" :key="this.id" max-width="600px" width="100%">
         <v-responsive class="d-flex text-left fill-height" >
             <v-row no-gutters class="py-4" justify="center" >
-                <v-timeline side="end">
+                <v-timeline side="end" truncate-line="both">
                     <v-timeline-item size="large" v-for="post in this.threadPostArray">
                     <template v-slot:icon>
                         <v-avatar size="60" :image="post.profile.refData.picture" ></v-avatar>
